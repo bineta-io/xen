@@ -2,8 +2,9 @@
   "name": "xen",
   "displayName": "Xen",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "Xen helps you with replies on X/Twitter.",
   "author": "bineta.io",
+  "homepage": "https://bineta.io",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -22,10 +23,5 @@
     "@types/react-dom": "18.2.18",
     "prettier": "3.2.4",
     "typescript": "5.3.3"
-  },
-  "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ]
   }
 }
