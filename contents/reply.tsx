@@ -2,11 +2,11 @@ import type { PlasmoCSConfig } from "plasmo"
 import React, { useEffect } from "react"
 import { createRoot } from "react-dom/client"
 
-import XenButton from "./components/XenButton"
+import XenButton from "../components/XenButton"
 
 
 // Plasmo Content Script UI: https://docs.plasmo.com/framework/content-scripts-ui
-const Content = () => {
+const Reply = () => {
   useEffect(() => {
     function handleXenButtonClick(xenBtnRoot: HTMLElement) {
       // Find the closest .DraftEditor-root from the button
@@ -110,7 +110,7 @@ const Content = () => {
   return null
 }
 
-export default Content
+export default Reply;
 
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
