@@ -7,16 +7,26 @@ import XenButton from "./components/XenButton"
 const Content = () => {
   React.useEffect(() => {
     function addXenButtons() {
+      // Clean up orphaned .xen-btn-root elements (not next to a reply button)
+      document.querySelectorAll('.xen-btn-root').forEach(xenEl => {
+        // If the next sibling is not a reply button, remove this xen-btn-root
+        if (!xenEl.nextElementSibling || !xenEl.nextElementSibling.matches('button[data-testid="tweetButtonInline"]')) {
+          xenEl.remove();
+        }
+      });
+      // Only inject if not already present
       document.querySelectorAll('button[data-testid="tweetButtonInline"]').forEach(replyBtn => {
-        if (replyBtn.parentElement.querySelector('.xen-btn-root')) return;
+        // Prevent duplicate injection: check if .xen-btn-root already exists immediately before this replyBtn
+        if (replyBtn.previousElementSibling && replyBtn.previousElementSibling.classList.contains('xen-btn-root')) {
+          return; // Already injected
+        }
         const xenContainer = document.createElement('div');
         xenContainer.className = 'xen-btn-root';
         xenContainer.style.display = 'inline-block';
         xenContainer.style.verticalAlign = 'middle';
         replyBtn.parentElement.insertBefore(xenContainer, replyBtn);
         const root = createRoot(xenContainer);
-        const btnHeight = getComputedStyle(replyBtn).height;
-        root.render(<XenButton height={btnHeight} />);
+        root.render(<XenButton />);
       });
     }
     // Initial injection
