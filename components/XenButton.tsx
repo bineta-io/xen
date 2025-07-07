@@ -14,8 +14,7 @@ const XenButton: React.FC<XenButtonProps> = () => (
       border: "1.3px solid #111",
       borderRadius: "50%",
       cursor: "pointer",
-      fontWeight: 900,
-      fontFamily: 'Inter, Arial Black, Arial, sans-serif',
+      fontFamily: 'Inter, Arial, sans-serif',
       fontSize: "15px",
       boxShadow: "2px 2px 0px #111",
       transition: "all 0.1s cubic-bezier(.17,.67,.83,.67)",
@@ -46,7 +45,7 @@ const XenButton: React.FC<XenButtonProps> = () => (
       // }
     }}
   >
-    X
+    𝕏<span style={{ fontWeight: 100, fontSize: '12px' }}>en</span>
   </button>
 )
 
