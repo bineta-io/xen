@@ -1,8 +1,8 @@
-import type { PlasmoCSConfig } from "plasmo"
-import React, { useEffect } from "react"
-import { createRoot } from "react-dom/client"
+import type { PlasmoCSConfig } from "plasmo";
+import React, { useEffect } from "react";
+import { createRoot } from "react-dom/client";
 
-import XenReplyButton from "../components/XenReplyButton"
+import { XenReplyButton } from "~components/XenReplyButton"
 
 const ReplyInjector = () => {
   useEffect(() => {

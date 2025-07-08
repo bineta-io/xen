@@ -5,7 +5,7 @@ import { Prompt } from "../prompts"
 import { extractTweetText, insertTextIntoTextField } from "./domUtils"
 import XenButton from "./XenButton"
 
-const XenReplyButton: React.FC = () => {
+export const XenReplyButton: React.FC = () => {
   const { get, loading } = useOpenRouter()
   const buttonRef = useRef<HTMLDivElement>(null)
 
@@ -27,5 +27,3 @@ const XenReplyButton: React.FC = () => {
     </div>
   )
 }
-
-export default XenReplyButton
