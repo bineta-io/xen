@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react"
 
 import { useOpenRouter } from "~hooks/useOpenRouter"
-import { Prompt } from "~prompts"
 import { extractTweetText, insertTextIntoTextField } from "./domUtils"
 import XenButton from "./XenButton"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+import { Prompt } from "~Prompt"
 
 export const XenReplyButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
@@ -23,7 +23,8 @@ export const XenReplyButton: React.FC = () => {
       console.log("Xen: Could not find tweet text.")
       return
     }
-    const response = await get(Prompt.system, tweetText)
+    const prompt = Prompt.generate("", tweetText)
+    const response = await get(prompt.system, prompt.user)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)
     }
