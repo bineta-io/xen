@@ -1,8 +1,8 @@
 import "./popup.css"
-import { useStorage } from "@plasmohq/storage/hook"
+import { useOpenRouterAPIKey } from "./hooks/useOpenRouterAPIKey"
 
 function IndexPopup() {
-  const [apiKey, setApiKey] = useStorage<string | null>("xen_openrouter_api_key")
+  const [apiKey, setApiKey] = useOpenRouterAPIKey()
   return (
     <div
       style={{
@@ -24,7 +24,7 @@ function IndexPopup() {
           color: "#222",
           marginBottom: 0,
           letterSpacing: 1.5,
-          alignSelf: "flex-start",
+          alignSelf: "flex-start"
         }}>
         Welcome to Xen
       </h2>
@@ -57,8 +57,8 @@ function IndexPopup() {
         Enter your OpenRouter API key to get started
       </p>
       <input
-        onChange={e => {
-          setApiKey(e.target.value);
+        onChange={(e) => {
+          setApiKey(e.target.value)
         }}
         value={apiKey ?? ""}
         placeholder="API Key"
