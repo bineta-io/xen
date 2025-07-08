@@ -1,11 +1,15 @@
 import type { PlasmoCSConfig } from "plasmo"
 import React, { useCallback, useEffect } from "react"
 import { createRoot } from "react-dom/client"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import XenButton from "../components/XenButton"
+import { useOpenRouter } from "~hooks/useOpenRouter"
 
 // Plasmo Content Script UI: https://docs.plasmo.com/framework/content-scripts-ui
 const Reply = () => {
+  const [apiKey] = useStorage("xen_openrouter_api_key")
+  const { get, loading } = useOpenRouter(apiKey);
   const extractTweetText = useCallback(() => {
     const tweetTextEl = document.querySelector('[data-testid="tweetText"]')
     if (tweetTextEl && tweetTextEl.firstChild) {
@@ -72,11 +76,18 @@ const Reply = () => {
   }
 
   const handleXenButtonClick = useCallback(
-    (xenBtnRoot: HTMLElement) => {
+    async (xenBtnRoot: HTMLElement) => {
       const tweetText = extractTweetText()
-      insertTextIntoTextField(xenBtnRoot, tweetText)
+      // const response = await get(
+      //   "You are a commentator on Twitter. Write a comment for the following tweet.",
+      //   tweetText
+      // )
+      const response = "Filler text"
+      if (response) {
+        insertTextIntoTextField(xenBtnRoot, response)
+      }
     },
-    [extractTweetText]
+    [extractTweetText, get]
   )
 
   useEffect(() => {
@@ -115,6 +126,7 @@ const Reply = () => {
               onClick={() => {
                 handleXenButtonClick(xenContainer)
               }}
+              loading={true}
             />
           )
         })
@@ -127,7 +139,7 @@ const Reply = () => {
     observer.observe(document.body, { childList: true, subtree: true })
     // Cleanup
     return () => observer.disconnect()
-  }, [extractTweetText, handleXenButtonClick])
+  }, [extractTweetText, handleXenButtonClick, loading])
   // tweetText state now contains the tweet text, can be used in the component as needed
   return null
 }

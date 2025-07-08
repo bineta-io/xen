@@ -2,17 +2,25 @@ import React from "react"
 
 type XenButtonProps = {
   onClick?: () => void
+  loading?: boolean
 }
 
-const XenButton: React.FC<XenButtonProps> = ({ onClick }) => (
+const XenButton: React.FC<XenButtonProps> = ({ onClick, loading }) => (
   <>
-    <button className="xen-btn"
+    <button
+      className="xen-btn"
       onClick={(e) => {
-        e.preventDefault();
-        onClick?.();
+        e.preventDefault()
+        onClick?.()
       }}
-    >
-      𝕏<span style={{ fontWeight: 100, fontSize: '12px' }}>en</span>
+      disabled={loading}>
+      {loading ? (
+        <div className="xen-loader">𝕏</div>
+      ) : (
+        <span>
+          𝕏<span style={{ fontWeight: 100, fontSize: "12px" }}>en</span>
+        </span>
+      )}
     </button>
     <style>{`
       .xen-btn {
@@ -32,12 +40,25 @@ const XenButton: React.FC<XenButtonProps> = ({ onClick }) => (
         min-height: 36px;
         min-width: 36px;
       }
+      .xen-btn:disabled {
+        cursor: not-allowed;
+        background: #ccc;
+      }
       .xen-btn:active {
         box-shadow: 0.7px 0.7px 0px #111;
         transform: translate(1.3px, 1.3px);
       }
-      .xen-btn:hover {
+      .xen-btn:hover:not(:disabled) {
         filter: brightness(1.1);
+      }
+
+      .xen-loader {
+        animation: spin 3s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     `}</style>
   </>
