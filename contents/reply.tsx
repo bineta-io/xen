@@ -1,5 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { createRoot } from "react-dom/client"
 
 import XenButton from "../components/XenButton"
@@ -7,60 +7,72 @@ import XenButton from "../components/XenButton"
 
 // Plasmo Content Script UI: https://docs.plasmo.com/framework/content-scripts-ui
 const Reply = () => {
-  useEffect(() => {
-    function handleXenButtonClick(xenBtnRoot: HTMLElement) {
-      // Find the closest .DraftEditor-root from the button
-      // This context is inside the injected button, so we need to find the root near the button
-      // The button is inside xen-btn-root, which is inserted before replyBtn
-      let root = xenBtnRoot.closest(
-        ".DraftEditor-root"
-      ) as HTMLElement | null
-      if (!root) {
-        // Try to find the nearest .DraftEditor-root after the replyBtn
-        let candidate = xenBtnRoot.nextElementSibling
-        while (candidate) {
-          if (
-            candidate.classList &&
-            candidate.classList.contains("DraftEditor-root")
-          ) {
-            root = candidate as HTMLElement
-            break
-          }
-          candidate = candidate.nextElementSibling
-        }
-        if (!root) {
-          // As a fallback, find the first one on the page
-          root = document.querySelector(".DraftEditor-root")
-        }
+  const extractTweetText = useCallback(() => {
+    const tweetTextEl = document.querySelector('[data-testid="tweetText"]');
+    if (tweetTextEl && tweetTextEl.firstChild) {
+      if (tweetTextEl.firstChild.nodeType === Node.TEXT_NODE) {
+        return tweetTextEl.firstChild.textContent || "";
+      } else if ((tweetTextEl.firstChild as HTMLElement).textContent) {
+        return (tweetTextEl.firstChild as HTMLElement).textContent || "";
       }
-      if (!root) return
-      // Find all <br data-text="true"> elements
-      const brEls = root.querySelectorAll('br[data-text="true"]')
-      brEls.forEach((brEl) => {
-        const span = document.createElement("span")
-        span.setAttribute("data-text", "true")
-        span.textContent = "Hello world!"
-        brEl.replaceWith(span)
-        // Simulate typing events
-        const editor =
-          root.querySelector('[contenteditable="true"]') || root
-        // Focus the editor
-        if (
-          editor &&
-          typeof (editor as HTMLElement).focus === "function"
-        ) {
-          ;(editor as HTMLElement).focus()
-        }
-        // Dispatch keydown, input, and keyup events
-        const events = [
-          new KeyboardEvent("keydown", { key: "H", bubbles: true }),
-          new InputEvent("input", { bubbles: true }),
-          new KeyboardEvent("keyup", { key: "H", bubbles: true })
-        ]
-        events.forEach((e) => editor && editor.dispatchEvent(e))
-      })
     }
+    return "";
+  }, [])
 
+  const handleXenButtonClick = useCallback((xenBtnRoot: HTMLElement) => {
+    // Find the closest .DraftEditor-root from the button
+    // This context is inside the injected button, so we need to find the root near the button
+    // The button is inside xen-btn-root, which is inserted before replyBtn
+    let root = xenBtnRoot.closest(
+      ".DraftEditor-root"
+    ) as HTMLElement | null
+    if (!root) {
+      // Try to find the nearest .DraftEditor-root after the replyBtn
+      let candidate = xenBtnRoot.nextElementSibling
+      while (candidate) {
+        if (
+          candidate.classList &&
+          candidate.classList.contains("DraftEditor-root")
+        ) {
+          root = candidate as HTMLElement
+          break
+        }
+        candidate = candidate.nextElementSibling
+      }
+      if (!root) {
+        // As a fallback, find the first one on the page
+        root = document.querySelector(".DraftEditor-root")
+      }
+    }
+    if (!root) return
+    // Find all <br data-text="true"> elements
+    const brEls = root.querySelectorAll('br[data-text="true"]')
+    brEls.forEach((brEl) => {
+      const span = document.createElement("span")
+      span.setAttribute("data-text", "true")
+      span.textContent = "Hello world!"
+      brEl.replaceWith(span)
+      // Simulate typing events
+      const editor =
+        root.querySelector('[contenteditable="true"]') || root
+      // Focus the editor
+      if (
+        editor &&
+        typeof (editor as HTMLElement).focus === "function"
+      ) {
+        ;(editor as HTMLElement).focus()
+      }
+      // Dispatch keydown, input, and keyup events
+      const events = [
+        new KeyboardEvent("keydown", { key: "H", bubbles: true }),
+        new InputEvent("input", { bubbles: true }),
+        new KeyboardEvent("keyup", { key: "H", bubbles: true })
+      ]
+      events.forEach((e) => editor && editor.dispatchEvent(e))
+    })
+  }, [])
+
+  useEffect(() => {
     function addXenButtons() {
       // Clean up orphaned .xen-btn-root elements (not next to a reply button)
       document.querySelectorAll(".xen-btn-root").forEach((xenEl) => {
@@ -93,7 +105,11 @@ const Reply = () => {
           const root = createRoot(xenContainer)
           root.render(
             <XenButton
-              onClick={() => handleXenButtonClick(xenContainer)}
+              onClick={() => {
+                const tweetText = extractTweetText()
+                console.log("sasha", tweetText)
+                handleXenButtonClick(xenContainer)
+              }}
             />
           )
         })
@@ -106,7 +122,8 @@ const Reply = () => {
     observer.observe(document.body, { childList: true, subtree: true })
     // Cleanup
     return () => observer.disconnect()
-  }, [])
+  }, [extractTweetText, handleXenButtonClick])
+  // tweetText state now contains the tweet text, can be used in the component as needed
   return null
 }
 
