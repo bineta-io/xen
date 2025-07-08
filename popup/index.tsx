@@ -1,4 +1,4 @@
-import "./popup.css"
+import "./index.css"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
 
 // Helper function to create noise texture CSS
