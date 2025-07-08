@@ -1,12 +1,22 @@
 import "./popup.css"
-import { useOpenRouterAPIKey } from "./hooks/useOpenRouterAPIKey"
+import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+
+// Helper function to create noise texture CSS
+const createNoiseBackground = (opacity = 0.05) => {
+  return {
+    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+    backgroundBlendMode: "overlay",
+    backgroundSize: "200px",
+    opacity
+  }
+}
 
 function IndexPopup() {
   const [apiKey, setApiKey] = useOpenRouterAPIKey()
   return (
     <div
       style={{
-        padding: 20,
+        padding: 28,
         width: 240,
         background: "#fffbe6",
         minWidth: 180,
@@ -14,68 +24,85 @@ function IndexPopup() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 8
+        gap: 16,
+        border: "4px solid #000",
+        borderRadius: 8,
+        boxShadow: "8px 8px 0 #000",
+        position: "relative",
+        overflow: "hidden",
       }}>
+      {/* Noise texture overlay */}
+      <div style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        pointerEvents: "none",
+        ...createNoiseBackground(0.08)
+      }} />
       <h2
         style={{
-          fontFamily: "Montserrat, Arial Black, sans-serif",
+          fontFamily: "'Archivo Black', 'Bebas Neue', Impact, sans-serif",
           fontWeight: 900,
-          fontSize: 24,
-          color: "#222",
+          fontSize: 32,
+          color: "#000",
           marginBottom: 0,
-          letterSpacing: 1.5,
-          alignSelf: "flex-start"
+          letterSpacing: 2.5,
+          alignSelf: "flex-start",
+          transform: "rotate(-1.5deg)",
+          textTransform: "uppercase",
+          textShadow: "1px 1px 0 #FF3C38",
+          position: "relative",
+          zIndex: 1,
         }}>
         Welcome to Xen
       </h2>
       <div
         style={{
           alignSelf: "flex-start",
-          fontSize: 10,
-          color: "#555",
+          fontSize: 13,
+          color: "#444",
           marginBottom: 2,
-          fontFamily: "Montserrat, Arial, sans-serif",
-          fontWeight: 400,
-          letterSpacing: 1.5,
-          marginTop: -10
+          fontFamily: "'Space Mono', 'Courier New', monospace",
+          fontWeight: 700,
+          letterSpacing: 2,
+          marginTop: -14,
+          transform: "rotate(-2deg)",
+          backgroundColor: "#ffeb3b",
+          padding: "1px 6px",
+          position: "relative",
+          zIndex: 1,
         }}>
         by Bineta
       </div>
-      <p
+      <div
         style={{
-          fontFamily: "Montserrat, Arial Black, sans-serif",
-          fontWeight: 600,
-          fontSize: 11,
-          color: "#222",
-          background: "#ff5e5b",
-          border: "2px solid #222",
-          borderRadius: 5,
-          padding: "2px 6px",
-          boxShadow: "2px 2px 0 #222",
-          margin: 0
+          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+          fontWeight: 700,
+          fontSize: 14,
+          color: "#000",
+          background: "#FF3C38",
+          border: "4px solid #000",
+          borderRadius: 8,
+          padding: "10px 14px",
+          boxShadow: "5px 5px 0 #000",
+          margin: "6px 0",
+          width: "95%",
+          textAlign: "center",
+          transform: "rotate(1deg)",
+          position: "relative",
+          zIndex: 1,
         }}>
         Enter your OpenRouter API key to get started
-      </p>
+      </div>
       <input
         onChange={(e) => {
           setApiKey(e.target.value)
         }}
         value={apiKey ?? ""}
         placeholder="API Key"
-        style={{
-          fontFamily: "inherit",
-          fontWeight: 700,
-          fontSize: 12,
-          color: "#222",
-          background: "#fff",
-          border: "2px solid #222",
-          borderRadius: 5,
-          padding: "4px 8px",
-          boxShadow: "2px 2px 0 #222",
-          outline: "none",
-          marginTop: 4,
-          width: 160
-        }}
+        className="neo-input"
       />
     </div>
   )

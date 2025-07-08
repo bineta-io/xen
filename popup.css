@@ -1,3 +1,44 @@
 body {
-    margin: 0
+    margin: 0;
+}
+
+/* Neobrutalist input styling */
+.neo-input {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 15px;
+    color: #000;
+    background: #fff;
+    border: 4px solid #000;
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 5px 5px 0 #000;
+    outline: none;
+    margin-top: 10px;
+    width: 90%;
+    transition: all 0.15s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.neo-input::placeholder {
+    color: #aaa;
+}
+
+.neo-input:focus {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 #000;
+    background: #ffffcc;
+}
+
+.neo-input:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 4px 4px 0 #000;
+}
+
+/* Handle combined hover and focus state */
+.neo-input:hover:focus {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 #000;
+    background: #ffffcc;
 }
