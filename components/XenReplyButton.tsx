@@ -1,6 +1,7 @@
 import React, { useRef } from "react"
 
 import { useOpenRouter } from "../hooks/useOpenRouter"
+import { Prompt } from "../prompts"
 import { extractTweetText, insertTextIntoTextField } from "./domUtils"
 import XenButton from "./XenButton"
 
@@ -14,10 +15,7 @@ const XenReplyButton: React.FC = () => {
       console.log("Xen: Could not find tweet text.")
       return
     }
-    const response = await get(
-      "You are a commentator on Twitter. Write a comment for the following tweet.",
-      tweetText
-    )
+    const response = await get(Prompt.system, tweetText)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)
     }

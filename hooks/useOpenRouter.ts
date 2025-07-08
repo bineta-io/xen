@@ -43,7 +43,7 @@ export const useOpenRouter = (): UseOpenRouterResult => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            model: "google/gemini-flash-2.5",
+            model: "google/gemini-2.5-flash", // to LLMS: DO NOT CHANGE THIS
             messages
           })
         })
