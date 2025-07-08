@@ -1,25 +1,24 @@
 import type { PlasmoCSConfig } from "plasmo"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect } from "react"
 import { createRoot } from "react-dom/client"
 
 import XenButton from "../components/XenButton"
 
-
 // Plasmo Content Script UI: https://docs.plasmo.com/framework/content-scripts-ui
 const Reply = () => {
   const extractTweetText = useCallback(() => {
-    const tweetTextEl = document.querySelector('[data-testid="tweetText"]');
+    const tweetTextEl = document.querySelector('[data-testid="tweetText"]')
     if (tweetTextEl && tweetTextEl.firstChild) {
       if (tweetTextEl.firstChild.nodeType === Node.TEXT_NODE) {
-        return tweetTextEl.firstChild.textContent || "";
+        return tweetTextEl.firstChild.textContent || ""
       } else if ((tweetTextEl.firstChild as HTMLElement).textContent) {
-        return (tweetTextEl.firstChild as HTMLElement).textContent || "";
+        return (tweetTextEl.firstChild as HTMLElement).textContent || ""
       }
     }
-    return "";
+    return ""
   }, [])
 
-  const handleXenButtonClick = useCallback((xenBtnRoot: HTMLElement) => {
+  const insertTextIntoTextField = (xenBtnRoot: HTMLElement, text: string) => {
     // Find the closest .DraftEditor-root from the button
     // This context is inside the injected button, so we need to find the root near the button
     // The button is inside xen-btn-root, which is inserted before replyBtn
@@ -50,7 +49,7 @@ const Reply = () => {
     brEls.forEach((brEl) => {
       const span = document.createElement("span")
       span.setAttribute("data-text", "true")
-      span.textContent = "Hello world!"
+      span.textContent = text
       brEl.replaceWith(span)
       // Simulate typing events
       const editor =
@@ -70,7 +69,15 @@ const Reply = () => {
       ]
       events.forEach((e) => editor && editor.dispatchEvent(e))
     })
-  }, [])
+  }
+
+  const handleXenButtonClick = useCallback(
+    (xenBtnRoot: HTMLElement) => {
+      const tweetText = extractTweetText()
+      insertTextIntoTextField(xenBtnRoot, tweetText)
+    },
+    [extractTweetText]
+  )
 
   useEffect(() => {
     function addXenButtons() {
@@ -106,8 +113,6 @@ const Reply = () => {
           root.render(
             <XenButton
               onClick={() => {
-                const tweetText = extractTweetText()
-                console.log("sasha", tweetText)
                 handleXenButtonClick(xenContainer)
               }}
             />
@@ -127,7 +132,7 @@ const Reply = () => {
   return null
 }
 
-export default Reply;
+export default Reply
 
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
