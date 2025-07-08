@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 
-import { useOpenRouter } from "../hooks/useOpenRouter"
-import { Prompt } from "../prompts"
+import { useOpenRouter } from "~hooks/useOpenRouter"
+import { Prompt } from "~prompts"
 import { extractTweetText, insertTextIntoTextField } from "./domUtils"
 import XenButton from "./XenButton"
 

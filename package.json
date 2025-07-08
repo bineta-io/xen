@@ -1,6 +1,6 @@
 {
   "name": "xen",
-  "displayName": "Xen",
+  "displayName": "Xen — generate replies on X/Twitter",
   "version": "0.0.1",
   "description": "Xen helps you with replies on X/Twitter.",
   "author": "bineta.io",
