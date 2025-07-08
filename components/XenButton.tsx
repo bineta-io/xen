@@ -3,17 +3,20 @@ import React from "react"
 type XenButtonProps = {
   onClick?: () => void
   loading?: boolean
+  hasError?: boolean
+  errorMessage?: string
 }
 
-const XenButton: React.FC<XenButtonProps> = ({ onClick, loading }) => (
+const XenButton: React.FC<XenButtonProps> = ({ onClick, loading, hasError = false, errorMessage = "Error" }) => (
   <>
     <button
-      className="xen-btn"
+      className={`xen-btn ${hasError ? 'xen-btn-error' : ''}`}
       onClick={(e) => {
         e.preventDefault()
         onClick?.()
       }}
-      disabled={loading}>
+      disabled={loading}
+      title={hasError ? errorMessage : undefined}>
       <div className="xen-btn-content">
         {loading ? (
           <div className="xen-loader">𝕏</div>
@@ -79,6 +82,17 @@ const XenButton: React.FC<XenButtonProps> = ({ onClick, loading }) => (
         background: #ccc;
         color: #666;
         transform: rotate(0deg);
+      }
+      
+      .xen-btn-error {
+        background: #ff3333;
+        animation: pulse 1.5s infinite;
+      }
+      
+      @keyframes pulse {
+        0% { box-shadow: 2px 2px 0px #000; }
+        50% { box-shadow: 4px 4px 0px #000; }
+        100% { box-shadow: 2px 2px 0px #000; }
       }
       
       .xen-btn:active {
