@@ -1,10 +1,8 @@
-import { useState } from "react"
-
 import "./popup.css"
+import { useStorage } from "@plasmohq/storage/hook"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
+  const [apiKey, setApiKey] = useStorage<string | null>("xen_openrouter_api_key")
   return (
     <div
       style={{
@@ -59,8 +57,10 @@ function IndexPopup() {
         Enter your OpenRouter API key to get started
       </p>
       <input
-        onChange={(e) => setData(e.target.value)}
-        value={data}
+        onChange={e => {
+          setApiKey(e.target.value);
+        }}
+        value={apiKey ?? ""}
         placeholder="API Key"
         style={{
           fontFamily: "inherit",
