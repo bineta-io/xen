@@ -21,6 +21,10 @@ const ReplyInjector = () => {
       document
         .querySelectorAll('button[data-testid="tweetButtonInline"]')
         .forEach((replyBtn) => {
+          if (!replyBtn.textContent.includes("Reply")) {
+            return
+          }
+
           if (
             replyBtn.previousElementSibling &&
             replyBtn.previousElementSibling.classList.contains("xen-btn-root")
