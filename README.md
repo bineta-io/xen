@@ -1,5 +1,8 @@
 <p align="center">
-  <h1 align="center">Xen by bineta: AI-powered replies on X/Twitter 🧠</h1>
+  <a href="https://bineta.io">
+   <img width="200px" src="./docs/logo-cut.png" alt="Logo">
+  </a>
+  <h1 align="center">Xen by bineta: AI-powered replies on X/Twitter</h1>
 </p>
 
 ## What is Xen?
