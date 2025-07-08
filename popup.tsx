@@ -102,35 +102,7 @@ function IndexPopup() {
         }}
         value={apiKey ?? ""}
         placeholder="API Key"
-        style={{
-          fontFamily: "'Space Mono', monospace",
-          fontWeight: 700,
-          fontSize: 15,
-          color: "#000",
-          background: "#fff",
-          border: "4px solid #000",
-          borderRadius: 8,
-          padding: "10px 14px",
-          boxShadow: "5px 5px 0 #000",
-          outline: "none",
-          marginTop: 10,
-          width: "90%",
-          transition: "all 0.15s ease-out",
-          position: "relative",
-          zIndex: 1,
-          "::placeholder": {
-            color: "#aaa"
-          },
-          ":focus": {
-            transform: "translate(3px, 3px)",
-            boxShadow: "2px 2px 0 #000",
-            background: "#ffffcc"
-          },
-          ":hover": {
-            transform: "translate(1px, 1px)",
-            boxShadow: "4px 4px 0 #000",
-          }
-        }}
+        className="neo-input"
       />
     </div>
   )
