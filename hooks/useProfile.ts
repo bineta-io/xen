@@ -1,6 +1,6 @@
 import { useStorage } from "@plasmohq/storage/hook"
 
-const defaultProfile = `By day, I'm a software engineer. 
+export const defaultProfile = `By day, I'm a software engineer. 
 By night, I'm the same, just in lower lighting and with more existential dread. 
 I once explained a memory leak to a client using only interpretive dance. 
 They didn't understand, but they did increase the budget by 20%.

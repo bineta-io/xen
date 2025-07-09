@@ -1,5 +1,5 @@
 import React from "react"
-import { useProfile } from "~hooks/useProfile"
+import { useProfile, defaultProfile } from "~hooks/useProfile"
 import "./index.css"
 
 // Helper function to create noise texture CSS (consistent with index.tsx)
@@ -86,7 +86,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ onBack }) => {
       <textarea
         value={profile}
         onChange={(e) => setProfile(e.target.value)}
-        placeholder="Enter your multi-paragraph profile describing you in your own words..."
+        placeholder={defaultProfile}
         className="neo-input"
         style={{
           width: "100%",

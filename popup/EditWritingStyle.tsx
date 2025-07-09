@@ -1,5 +1,5 @@
 import React from "react"
-import { useWritingStyle } from "~hooks/useWritingStyle"
+import { useWritingStyle, defaultWritingStyle } from "~hooks/useWritingStyle"
 import "./index.css"
 
 // Helper function to create noise texture CSS (consistent with index.tsx)
@@ -86,10 +86,7 @@ const EditWritingStyle: React.FC<EditWritingStyleProps> = ({ onBack }) => {
       <textarea
         value={writingStyle}
         onChange={(e) => setWritingStyle(e.target.value)}
-        placeholder={`tone: professional
-formality: balanced
-length: concise
-customInstructions: Add your specific writing style preferences here...`}
+        placeholder={defaultWritingStyle}
         className="neo-input"
         style={{
           width: "100%",

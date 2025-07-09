@@ -1,6 +1,6 @@
 import { useStorage } from "@plasmohq/storage/hook"
 
-const defaultWritingStyle = `tone: professional
+export const defaultWritingStyle = `tone: professional
 formality: balanced
 length: concise
 customInstructions: `
