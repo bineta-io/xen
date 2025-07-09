@@ -1,5 +1,7 @@
 import "./index.css"
+import { useState } from "react"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+import EditProfile from "./EditProfile"
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -13,6 +15,11 @@ const createNoiseBackground = (opacity = 0.05) => {
 
 function IndexPopup() {
   const [apiKey, setApiKey] = useOpenRouterAPIKey()
+  const [showProfileEditor, setShowProfileEditor] = useState(false)
+  if (showProfileEditor) {
+    return <EditProfile onBack={() => setShowProfileEditor(false)} />
+  }
+
   return (
     <div
       style={{
@@ -29,18 +36,20 @@ function IndexPopup() {
         borderRadius: 8,
         boxShadow: "8px 8px 0 #000",
         position: "relative",
-        overflow: "hidden",
+        overflow: "hidden"
       }}>
       {/* Noise texture overlay */}
-      <div style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        pointerEvents: "none",
-        ...createNoiseBackground(0.08)
-      }} />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          pointerEvents: "none",
+          ...createNoiseBackground(0.08)
+        }}
+      />
       <h2
         style={{
           fontFamily: "'Archivo Black', 'Bebas Neue', Impact, sans-serif",
@@ -54,7 +63,7 @@ function IndexPopup() {
           textTransform: "uppercase",
           textShadow: "1px 1px 0 #FF3C38",
           position: "relative",
-          zIndex: 1,
+          zIndex: 1
         }}>
         Welcome to Xen
       </h2>
@@ -72,7 +81,7 @@ function IndexPopup() {
           backgroundColor: "#ffeb3b",
           padding: "1px 6px",
           position: "relative",
-          zIndex: 1,
+          zIndex: 1
         }}>
         by Bineta
       </div>
@@ -92,7 +101,7 @@ function IndexPopup() {
           textAlign: "center",
           transform: "rotate(1deg)",
           position: "relative",
-          zIndex: 1,
+          zIndex: 1
         }}>
         Enter your OpenRouter API key to get started
       </div>
@@ -104,6 +113,27 @@ function IndexPopup() {
         placeholder="API Key"
         className="neo-input"
       />
+
+      {/* Profile section */}
+      <button
+        onClick={() => setShowProfileEditor(true)}
+        style={{
+          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+          fontWeight: 700,
+          fontSize: 12,
+          color: "#000",
+          background: "#7DEDFF",
+          border: "2px solid #000",
+          borderRadius: 6,
+          padding: "4px 8px",
+          boxShadow: "3px 3px 0 #000",
+          cursor: "pointer",
+          transform: "rotate(1deg)",
+          position: "relative",
+          zIndex: 1
+        }}>
+        Edit profile
+      </button>
     </div>
   )
 }

@@ -5,9 +5,11 @@ import { extractTweetText, insertTextIntoTextField } from "./domUtils"
 import XenButton from "./XenButton"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
 import { Prompt } from "~Prompt"
+import { useProfile } from "~hooks/useProfile"
 
 export const XenReplyButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
+  const [profile] = useProfile()
   const { get, loading } = useOpenRouter()
   const buttonRef = useRef<HTMLDivElement>(null)
   const [showError, setShowError] = useState(false)
@@ -23,7 +25,7 @@ export const XenReplyButton: React.FC = () => {
       console.log("Xen: Could not find tweet text.")
       return
     }
-    const prompt = Prompt.generate("", tweetText)
+    const prompt = Prompt.generate(profile, tweetText)
     const response = await get(prompt.system, prompt.user)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)
