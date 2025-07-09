@@ -6,10 +6,12 @@ import XenButton from "./XenButton"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
 import { Prompt } from "~Prompt"
 import { useProfile } from "~hooks/useProfile"
+import { useWritingStyle } from "~hooks/useWritingStyle"
 
 export const XenInteractionButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
   const [profile] = useProfile()
+  const [writingStyle] = useWritingStyle()
   const { get, loading } = useOpenRouter()
   const buttonRef = useRef<HTMLDivElement>(null)
   const [showError, setShowError] = useState(false)
@@ -25,7 +27,7 @@ export const XenInteractionButton: React.FC = () => {
       console.log("Xen: Could not find tweet text.")
       return
     }
-    const prompt = Prompt.generate(profile, tweetText)
+    const prompt = Prompt.generate(profile, tweetText, writingStyle)
     const response = await get(prompt.system, prompt.user)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)

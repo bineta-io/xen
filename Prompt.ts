@@ -1,5 +1,5 @@
 export class Prompt {
-  static generate(profile: string, tweet: string) {
+  static generate(profile: string, tweet: string, writingStyle: string) {
     return {
       system: `You are a viral content strategist specializing in Twitter/X. 
 Your mission is to transform source material into engaging, shareable Twitter replies that maximize engagement (likes, retweets, replies) and follower growth.
@@ -16,6 +16,10 @@ WRITING STYLE REQUIREMENTS:
 - Be concise and to the point.
 - Be original and creative.
 - Be engaging and shareable.
+
+ADDITIONAL WRITING STYLE INSTRUCTIONS:
+${writingStyle}
+
 
 REPLY STRATEGY - Your reply should achieve one or more of the following:
 1. Add Value with a Smile: Deliver insights, facts, or perspectives the original tweet missed, but do it with a touch of wit or humor when appropriate.
