@@ -2,6 +2,6 @@ import React from "react"
 
 import { XenInteractionButton } from "./XenInteractionButton"
 
-export const XenReplyButton: React.FC = () => {
+export const XenQuoteButton: React.FC = () => {
   return <XenInteractionButton />
 }

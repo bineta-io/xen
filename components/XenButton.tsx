@@ -10,7 +10,7 @@ type XenButtonProps = {
 const XenButton: React.FC<XenButtonProps> = ({ onClick, loading, hasError = false, errorMessage = "Error" }) => (
   <>
     <button
-      className={`xen-btn ${hasError ? 'xen-btn-error' : ''}`}
+      className={`xen-btn ${hasError ? 'xen-btn-error' : ''} ${loading ? 'xen-btn-loading' : ''}`}
       onClick={(e) => {
         e.preventDefault()
         onClick?.()
@@ -77,11 +77,18 @@ const XenButton: React.FC<XenButtonProps> = ({ onClick, loading, hasError = fals
         letter-spacing: 0.5px;
       }
       
-      .xen-btn:disabled {
+      .xen-btn:disabled:not(.xen-btn-loading) {
         cursor: not-allowed;
         background: #ccc;
         color: #666;
         transform: rotate(0deg);
+      }
+      
+      .xen-btn.xen-btn-loading {
+        cursor: not-allowed;
+        background: #fcee09 !important;
+        color: #000 !important;
+        transform: rotate(-1deg) !important;
       }
       
       .xen-btn-error {
@@ -113,6 +120,9 @@ const XenButton: React.FC<XenButtonProps> = ({ onClick, loading, hasError = fals
       .xen-loader {
         animation: spin 1.5s cubic-bezier(.45,.05,.55,.95) infinite;
         display: inline-block;
+        font-size: 16px;
+        font-weight: 900;
+        font-family: 'Space Mono', monospace;
       }
 
       @keyframes spin {
