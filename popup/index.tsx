@@ -20,11 +20,11 @@ function IndexPopup() {
   const [showWritingStyleEditor, setShowWritingStyleEditor] = useState(false)
   
   if (showProfileEditor) {
-    return <EditProfile onBack={() => setShowProfileEditor(false)} />
+    return <EditProfile onSave={() => setShowProfileEditor(false)} />
   }
   
   if (showWritingStyleEditor) {
-    return <EditWritingStyle onBack={() => setShowWritingStyleEditor(false)} />
+    return <EditWritingStyle onSave={() => setShowWritingStyleEditor(false)} />
   }
 
   return (

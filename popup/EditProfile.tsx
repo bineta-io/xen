@@ -13,11 +13,19 @@ const createNoiseBackground = (opacity = 0.05) => {
 }
 
 interface EditProfileProps {
-  onBack: () => void
+  onSave: () => void
 }
 
-const EditProfile: React.FC<EditProfileProps> = ({ onBack }) => {
+const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
   const [profile, setProfile] = useProfile()
+  
+  const handleReset = () => {
+    setProfile(defaultProfile)
+  }
+  
+  const handleSave = () => {
+    onSave()
+  }
 
   return (
     <div
@@ -107,16 +115,17 @@ const EditProfile: React.FC<EditProfileProps> = ({ onBack }) => {
         display: "flex", 
         justifyContent: "space-between", 
         width: "100%",
-        marginTop: "10px"
+        marginTop: "10px",
+        gap: "10px"
       }}>
         <button
-          onClick={onBack}
+          onClick={handleReset}
           style={{
             fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
             fontWeight: 700,
             fontSize: 14,
             color: "#000",
-            background: "#ccc",
+            background: "#ff9800",
             border: "3px solid #000",
             borderRadius: 6,
             padding: "8px 12px",
@@ -126,7 +135,26 @@ const EditProfile: React.FC<EditProfileProps> = ({ onBack }) => {
             position: "relative",
             zIndex: 1,
           }}>
-          Back
+          Reset
+        </button>
+        <button
+          onClick={handleSave}
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#4caf50",
+            border: "3px solid #000",
+            borderRadius: 6,
+            padding: "8px 12px",
+            boxShadow: "4px 4px 0 #000",
+            cursor: "pointer",
+            transform: "rotate(1deg)",
+            position: "relative",
+            zIndex: 1,
+          }}>
+          Save
         </button>
       </div>
     </div>
