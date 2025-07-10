@@ -38,7 +38,8 @@ export const XenInteractionButton: React.FC = () => {
     console.log('System Prompt:', prompt.system)
     console.log('User Prompt:', prompt.user)
     console.log('========================')
-    
+
+    // const response = "test"
     const response = await get(prompt.system, prompt.user)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)
