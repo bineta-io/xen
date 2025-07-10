@@ -30,6 +30,13 @@ export const XenInteractionButton: React.FC = () => {
       return
     }
     const prompt = Prompt.generate(profile, tweetText, writingStyle, systemPrompt)
+    
+    // Log the final prompts for validation
+    console.log('=== XEN PROMPT DEBUG ===')
+    console.log('System Prompt:', prompt.system)
+    console.log('User Prompt:', prompt.user)
+    console.log('========================')
+    
     const response = await get(prompt.system, prompt.user)
     if (response) {
       insertTextIntoTextField(buttonRef.current, response)
