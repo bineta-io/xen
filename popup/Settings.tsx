@@ -2,6 +2,7 @@ import { useState } from "react"
 import EditProfile from "./EditProfile"
 import EditWritingStyle from "./EditWritingStyle"
 import EditSystemPrompt from "./EditSystemPrompt"
+import { useReplyMode } from "../hooks/useReplyMode"
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -21,6 +22,7 @@ function Settings({ onBack }: SettingsProps) {
   const [showProfileEditor, setShowProfileEditor] = useState(false)
   const [showWritingStyleEditor, setShowWritingStyleEditor] = useState(false)
   const [showSystemPromptEditor, setShowSystemPromptEditor] = useState(false)
+  const [replyMode, setReplyMode] = useReplyMode()
   
   if (showProfileEditor) {
     return <EditProfile onSave={() => setShowProfileEditor(false)} />
@@ -185,10 +187,83 @@ function Settings({ onBack }: SettingsProps) {
           cursor: "pointer",
           transform: "rotate(1deg)",
           position: "relative",
-          zIndex: 1
+          zIndex: 1,
+          marginBottom: "8px"
         }}>
         Edit system prompt
       </button>
+      
+      {/* Reply Mode section */}
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          position: "relative",
+          zIndex: 1
+        }}>
+        <div
+          style={{
+            fontSize: 11,
+            fontFamily: "'Space Mono', 'Courier New', monospace",
+            fontWeight: 700,
+            color: "#444",
+            letterSpacing: 1,
+            textTransform: "uppercase",
+            transform: "rotate(-1deg)",
+            alignSelf: "flex-start"
+          }}>
+          Reply Mode
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: 6,
+            width: "100%"
+          }}>
+          <button
+            onClick={() => setReplyMode("one")}
+            style={{
+              fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+              fontWeight: 700,
+              fontSize: 11,
+              color: "#000",
+              background: replyMode === "one" ? "#FFD700" : "#f0f0f0",
+              border: "2px solid #000",
+              borderRadius: 6,
+              padding: "6px 12px",
+              boxShadow: replyMode === "one" ? "4px 4px 0 #000" : "2px 2px 0 #000",
+              cursor: "pointer",
+              transform: replyMode === "one" ? "rotate(-1deg)" : "rotate(0deg)",
+              position: "relative",
+              zIndex: 1,
+              flex: 1
+            }}>
+            One Reply
+          </button>
+          <button
+            onClick={() => setReplyMode("multiple")}
+            style={{
+              fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+              fontWeight: 700,
+              fontSize: 11,
+              color: "#000",
+              background: replyMode === "multiple" ? "#FFD700" : "#f0f0f0",
+              border: "2px solid #000",
+              borderRadius: 6,
+              padding: "6px 12px",
+              boxShadow: replyMode === "multiple" ? "4px 4px 0 #000" : "2px 2px 0 #000",
+              cursor: "pointer",
+              transform: replyMode === "multiple" ? "rotate(1deg)" : "rotate(0deg)",
+              position: "relative",
+              zIndex: 1,
+              flex: 1
+            }}>
+            Multiple Replies
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

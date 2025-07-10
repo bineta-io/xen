@@ -8,12 +8,14 @@ import { Prompt } from "~Prompt"
 import { useProfile } from "~hooks/useProfile"
 import { useWritingStyle } from "~hooks/useWritingStyle"
 import { useSystemPrompt } from "~hooks/useSystemPrompt"
+import { useReplyMode } from "~hooks/useReplyMode"
 
 export const XenInteractionButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
   const [profile] = useProfile()
   const [writingStyle] = useWritingStyle()
   const [systemPrompt] = useSystemPrompt()
+  const [replyMode] = useReplyMode()
   const { get, loading } = useOpenRouter()
   const buttonRef = useRef<HTMLDivElement>(null)
   const [showError, setShowError] = useState(false)
@@ -29,7 +31,7 @@ export const XenInteractionButton: React.FC = () => {
       console.log("Xen: Could not find tweet text.")
       return
     }
-    const prompt = Prompt.generate(profile, tweetText, writingStyle, systemPrompt)
+    const prompt = Prompt.generate(profile, tweetText, writingStyle, systemPrompt, replyMode)
     
     // Log the final prompts for validation
     console.log('=== XEN PROMPT DEBUG ===')
