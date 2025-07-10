@@ -61,42 +61,19 @@ export const insertTextIntoTextField = (
 ) => {
   if (!containerEl) return
 
-  let root = containerEl.closest(".DraftEditor-root") as HTMLElement | null
-  if (!root) {
-    let candidate = containerEl.nextElementSibling
-    while (candidate) {
-      if (
-        candidate.classList &&
-        candidate.classList.contains("DraftEditor-root")
-      ) {
-        root = candidate as HTMLElement
-        break
-      }
-      candidate = candidate.nextElementSibling
-    }
-    if (!root) {
-      root = document.querySelector(".DraftEditor-root")
-    }
+  // Find the editor element
+  let editor = containerEl.closest('[contenteditable="true"]') as HTMLElement | null
+  if (!editor) {
+    const root = containerEl.closest(".DraftEditor-root") as HTMLElement | null
+      || document.querySelector(".DraftEditor-root") as HTMLElement | null
+    if (!root) return
+    editor = root.querySelector('[contenteditable="true"]') as HTMLElement | null
+    if (!editor) return
   }
-  if (!root) return
 
-  const brEls = root.querySelectorAll('br[data-text="true"]')
-  brEls.forEach((brEl) => {
-    const span = document.createElement("span")
-    span.setAttribute("data-text", "true")
-    span.textContent = text
-    brEl.replaceWith(span)
+  // Focus the editor
+  editor.focus()
 
-    const editor = root.querySelector('[contenteditable="true"]') || root
-    if (editor && typeof (editor as HTMLElement).focus === "function") {
-      ;(editor as HTMLElement).focus()
-    }
-
-    const events = [
-      new KeyboardEvent("keydown", { key: text[0] || "H", bubbles: true }),
-      new InputEvent("input", { bubbles: true }),
-      new KeyboardEvent("keyup", { key: text[0] || "H", bubbles: true })
-    ]
-    events.forEach((e) => editor && editor.dispatchEvent(e))
-  })
+  // Insert text at cursor position
+  document.execCommand('insertText', false, text)
 }
