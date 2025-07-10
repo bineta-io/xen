@@ -57,7 +57,7 @@ export const extractTweetText = (containerEl: HTMLElement | null): string => {
 
 export const insertTextIntoTextField = (
   containerEl: HTMLElement | null,
-  text: string
+  text: string,
 ) => {
   if (!containerEl) return
 
@@ -74,6 +74,9 @@ export const insertTextIntoTextField = (
   // Focus the editor
   editor.focus()
 
-  // Insert text at cursor position
+  // Select all text before inserting
+  document.execCommand('selectAll', false, null)
+
+  // Insert text at cursor position (or replace selected text)
   document.execCommand('insertText', false, text)
 }
