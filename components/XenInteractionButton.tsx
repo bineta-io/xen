@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 
 import { useOpenRouter } from "~hooks/useOpenRouter"
-import { extractTweetText, insertTextIntoTextField } from "./domUtils"
+import { extractTweetText } from "./domUtils"
 import XenButton from "./XenButton"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
 import { Prompt } from "~Prompt"
@@ -9,6 +9,7 @@ import { useProfile } from "~hooks/useProfile"
 import { useWritingStyle } from "~hooks/useWritingStyle"
 import { useSystemPrompt } from "~hooks/useSystemPrompt"
 import { useReplyMode } from "~hooks/useReplyMode"
+import { useEditor } from "~hooks/useEditor"
 
 export const XenInteractionButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
@@ -17,8 +18,9 @@ export const XenInteractionButton: React.FC = () => {
   const [systemPrompt] = useSystemPrompt()
   const [replyMode] = useReplyMode()
   const { get, loading } = useOpenRouter()
-  const buttonRef = useRef<HTMLDivElement>(null)
+  const buttonContainerRef = useRef<HTMLDivElement>(null)
   const [showError, setShowError] = useState(false)
+  const {insertText} = useEditor()
 
   const handleXenButtonClick = async () => {
     if (!apiKey) {
@@ -26,28 +28,26 @@ export const XenInteractionButton: React.FC = () => {
       return
     }
     
-    const tweetText = extractTweetText(buttonRef.current)
+    const tweetText = extractTweetText()
     if (!tweetText) {
-      console.log("Xen: Could not find tweet text.")
+      console.debug("Xen: Could not find tweet text.")
       return
     }
     const prompt = Prompt.generate(profile, tweetText, writingStyle, systemPrompt, replyMode)
     
     // Log the final prompts for validation
-    console.log('=== XEN PROMPT DEBUG ===')
-    console.log('System Prompt:', prompt.system)
-    console.log('User Prompt:', prompt.user)
-    console.log('========================')
+    console.debug('=== XEN PROMPT DEBUG ===')
+    console.debug('System Prompt:', prompt.system)
+    console.debug('User Prompt:', prompt.user)
+    console.debug('========================')
 
     // const response = "test"
     const response = await get(prompt.system, prompt.user)
-    if (response) {
-      insertTextIntoTextField(buttonRef.current, response)
-    }
+    insertText(response)
   }
 
   return (
-    <div ref={buttonRef}>
+    <div ref={buttonContainerRef}>
       <XenButton 
         onClick={handleXenButtonClick} 
         loading={loading} 

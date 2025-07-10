@@ -1,8 +1,8 @@
-export const extractTweetText = (containerEl: HTMLElement | null): string => {
-  if (!containerEl) return ""
+import { getEditor } from "~hooks/useEditor"
 
-  // Check if we're in a quote retweet modal
-  const modal = containerEl.closest('[role="dialog"]')
+export const extractTweetText = (): string => {
+  const editor = getEditor()
+  const modal = editor.closest('[role="dialog"]')
   if (modal) {
     // In quote retweet modal, look for the quoted tweet content
     // First try to find the quoted tweet by looking for the attachments section
@@ -38,7 +38,7 @@ export const extractTweetText = (containerEl: HTMLElement | null): string => {
     }
   }
 
-  const article = containerEl.closest("article")
+  const article = editor.closest("article")
   if (!article) {
     const tweetTextEl = document.querySelector('[data-testid="tweetText"]')
     return tweetTextEl?.textContent ?? ""
@@ -53,30 +53,4 @@ export const extractTweetText = (containerEl: HTMLElement | null): string => {
     }
   }
   return tweetTextEl?.textContent ?? ""
-}
-
-export const insertTextIntoTextField = (
-  containerEl: HTMLElement | null,
-  text: string,
-) => {
-  if (!containerEl) return
-
-  // Find the editor element
-  let editor = containerEl.closest('[contenteditable="true"]') as HTMLElement | null
-  if (!editor) {
-    const root = containerEl.closest(".DraftEditor-root") as HTMLElement | null
-      || document.querySelector(".DraftEditor-root") as HTMLElement | null
-    if (!root) return
-    editor = root.querySelector('[contenteditable="true"]') as HTMLElement | null
-    if (!editor) return
-  }
-
-  // Focus the editor
-  editor.focus()
-
-  // Select all text before inserting
-  document.execCommand('selectAll', false, null)
-
-  // Insert text at cursor position (or replace selected text)
-  document.execCommand('insertText', false, text)
 }
