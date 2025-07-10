@@ -1,9 +1,7 @@
 import "./index.css"
 import { useState } from "react"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
-import EditProfile from "./EditProfile"
-import EditWritingStyle from "./EditWritingStyle"
-import EditSystemPrompt from "./EditSystemPrompt"
+import Settings from "./Settings"
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -17,20 +15,10 @@ const createNoiseBackground = (opacity = 0.05) => {
 
 function IndexPopup() {
   const [apiKey, setApiKey] = useOpenRouterAPIKey()
-  const [showProfileEditor, setShowProfileEditor] = useState(false)
-  const [showWritingStyleEditor, setShowWritingStyleEditor] = useState(false)
-  const [showSystemPromptEditor, setShowSystemPromptEditor] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   
-  if (showProfileEditor) {
-    return <EditProfile onSave={() => setShowProfileEditor(false)} />
-  }
-  
-  if (showWritingStyleEditor) {
-    return <EditWritingStyle onSave={() => setShowWritingStyleEditor(false)} />
-  }
-  
-  if (showSystemPromptEditor) {
-    return <EditSystemPrompt onSave={() => setShowSystemPromptEditor(false)} />
+  if (showSettings) {
+    return <Settings onBack={() => setShowSettings(false)} />
   }
 
   return (
@@ -127,69 +115,26 @@ function IndexPopup() {
         className="neo-input"
       />
 
-      {/* Profile section */}
+      {/* Settings button */}
       <button
-        onClick={() => setShowProfileEditor(true)}
+        onClick={() => setShowSettings(true)}
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: 14,
           color: "#000",
-          background: "#7DEDFF",
-          border: "2px solid #000",
-          borderRadius: 6,
-          padding: "4px 8px",
-          boxShadow: "3px 3px 0 #000",
+          background: "#FFD700",
+          border: "3px solid #000",
+          borderRadius: 8,
+          padding: "8px 16px",
+          boxShadow: "5px 5px 0 #000",
           cursor: "pointer",
-          transform: "rotate(1deg)",
+          transform: "rotate(-0.5deg)",
           position: "relative",
           zIndex: 1,
-          marginBottom: "8px"
+          marginTop: "8px"
         }}>
-        Edit profile
-      </button>
-      
-      {/* Writing Style section */}
-      <button
-        onClick={() => setShowWritingStyleEditor(true)}
-        style={{
-          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          fontWeight: 700,
-          fontSize: 12,
-          color: "#000",
-          background: "#90EE90",
-          border: "2px solid #000",
-          borderRadius: 6,
-          padding: "4px 8px",
-          boxShadow: "3px 3px 0 #000",
-          cursor: "pointer",
-          transform: "rotate(-1deg)",
-          position: "relative",
-          zIndex: 1,
-          marginBottom: "8px"
-        }}>
-        Edit writing style
-      </button>
-      
-      {/* System Prompt section */}
-      <button
-        onClick={() => setShowSystemPromptEditor(true)}
-        style={{
-          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          fontWeight: 700,
-          fontSize: 12,
-          color: "#000",
-          background: "#E1BEE7",
-          border: "2px solid #000",
-          borderRadius: 6,
-          padding: "4px 8px",
-          boxShadow: "3px 3px 0 #000",
-          cursor: "pointer",
-          transform: "rotate(1deg)",
-          position: "relative",
-          zIndex: 1
-        }}>
-        Edit system prompt
+        Settings
       </button>
     </div>
   )
