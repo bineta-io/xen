@@ -1,5 +1,5 @@
 import React from "react"
-import { useProfile, defaultProfile } from "~hooks/useProfile"
+import { useWritingStyle, defaultWritingStyle } from "~hooks/useWritingStyle"
 import "./index.css"
 
 // Helper function to create noise texture CSS (consistent with index.tsx)
@@ -12,15 +12,15 @@ const createNoiseBackground = (opacity = 0.05) => {
   }
 }
 
-interface EditProfileProps {
+interface EditWritingStyleProps {
   onSave: () => void
 }
 
-const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
-  const [profile, setProfile] = useProfile()
+const EditWritingStyle: React.FC<EditWritingStyleProps> = ({ onSave }) => {
+  const [writingStyle, setWritingStyle] = useWritingStyle()
   
   const handleReset = () => {
-    setProfile(defaultProfile)
+    setWritingStyle(defaultWritingStyle)
   }
   
   const handleSave = () => {
@@ -70,7 +70,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
           position: "relative",
           zIndex: 1,
         }}>
-        Edit Profile
+        Writing Style
       </h2>
       
       <div
@@ -88,13 +88,13 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
           position: "relative",
           zIndex: 1,
         }}>
-        Your profile description
+        Instructions for AI responses
       </div>
       
       <textarea
-        value={profile}
-        onChange={(e) => setProfile(e.target.value)}
-        placeholder={defaultProfile}
+        value={writingStyle}
+        onChange={(e) => setWritingStyle(e.target.value)}
+        placeholder={defaultWritingStyle}
         className="neo-input"
         style={{
           width: "100%",
@@ -161,4 +161,4 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
   )
 }
 
-export default EditProfile
+export default EditWritingStyle

@@ -1,5 +1,5 @@
 import React from "react"
-import { useProfile, defaultProfile } from "~hooks/useProfile"
+import { useSystemPrompt, defaultSystemPrompt } from "~hooks/useSystemPrompt"
 import "./index.css"
 
 // Helper function to create noise texture CSS (consistent with index.tsx)
@@ -12,15 +12,15 @@ const createNoiseBackground = (opacity = 0.05) => {
   }
 }
 
-interface EditProfileProps {
+interface EditSystemPromptProps {
   onSave: () => void
 }
 
-const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
-  const [profile, setProfile] = useProfile()
+const EditSystemPrompt: React.FC<EditSystemPromptProps> = ({ onSave }) => {
+  const [systemPrompt, setSystemPrompt] = useSystemPrompt()
   
   const handleReset = () => {
-    setProfile(defaultProfile)
+    setSystemPrompt(defaultSystemPrompt)
   }
   
   const handleSave = () => {
@@ -70,7 +70,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
           position: "relative",
           zIndex: 1,
         }}>
-        Edit Profile
+        System Prompt
       </h2>
       
       <div
@@ -88,13 +88,13 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
           position: "relative",
           zIndex: 1,
         }}>
-        Your profile description
+        AI behavior instructions
       </div>
       
       <textarea
-        value={profile}
-        onChange={(e) => setProfile(e.target.value)}
-        placeholder={defaultProfile}
+        value={systemPrompt}
+        onChange={(e) => setSystemPrompt(e.target.value)}
+        placeholder={defaultSystemPrompt}
         className="neo-input"
         style={{
           width: "100%",
@@ -161,4 +161,4 @@ const EditProfile: React.FC<EditProfileProps> = ({ onSave }) => {
   )
 }
 
-export default EditProfile
+export default EditSystemPrompt
