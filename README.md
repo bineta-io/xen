@@ -10,12 +10,10 @@
   AI that writes tone-matched X/Twitter replies in one click — free, customizable, BYO key
 </p>
 
-<p align="center">
-  <a href="https://chrome.google.com/webstore/detail/eijgkablmpomnoghhfelpfiilagdbjkb">
-    <img src="https://img.shields.io/chrome-web-store/v/eijgkablmpomnoghhfelpfiilagdbjkb?label=Chrome%20Web%20Store&logo=google-chrome&color=blue" alt="Chrome Web Store">
-  </a>
-  <img src="https://img.shields.io/chrome-web-store/last-updated/eijgkablmpomnoghhfelpfiilagdbjkb?color=brightgreen" alt="Last Updated">
-</p>
+## Download Xen
+
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/eijgkablmpomnoghhfelpfiilagdbjkb) - Official Chrome extension
+- [GitHub Releases](https://github.com/bineta-io/xen/releases) - Latest releases and source code
 
 ## What is Xen?
 
