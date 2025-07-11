@@ -21,19 +21,19 @@ Xen is a browser extension that helps you create on-brand, tone-matched replies 
 It adds a special "Xen" button right next to the standard reply button on tweets.
 
 ## Why Xen?
-• Open-source & transparent – inspect the code, fork, contribute
-• 100% free – you only cover your own OpenRouter usage
-• Tone-match & persona edit – sound exactly like you, from witty founder to thoughtful PM
-• Built for startup teams – reply faster, engage more, build authority
-• One-click AI replies right inside X
-• Privacy-first: runs in your browser, no hidden servers
+- Open-source & transparent – inspect the code, fork, contribute
+- 100% free – you only cover your own OpenRouter usage
+- Tone-match & persona edit – sound exactly like you, from witty founder to thoughtful PM
+- Built for startup teams – reply faster, engage more, build authority
+- One-click AI replies right inside X
+- Privacy-first: runs in your browser, no hidden servers
 
 <img src="docs/screenshot-1.jpg" width="500px" alt="Xen in action">
 
 ## Results You’ll Love
-• Never stare at a blank reply box again
-• Join conversations instantly and consistently
-• Grow followers & amplify brand awareness without extra headcount
+- Never stare at a blank reply box again
+- Join conversations instantly and consistently
+- Grow followers & amplify brand awareness without extra headcount
 
 ## How It Works
 1. Install Xen
