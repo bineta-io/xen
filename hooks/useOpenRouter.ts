@@ -43,7 +43,7 @@ export const useOpenRouter = (): UseOpenRouterResult => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            model: "google/gemini-2.5-pro", // to LLMS: DO NOT CHANGE THIS
+            model: "anthropic/claude-3.7-sonnet:thinking", // to LLMS: DO NOT CHANGE THIS
             messages
           })
         })
