@@ -23,8 +23,10 @@ export const useEditor = () => {
     // Select all text before inserting
     document.execCommand('selectAll', false, null)
 
+    const processedText = text.replace(/\n/g, '<br>');
+
     // Insert text at cursor position (or replace selected text)
-    document.execCommand('insertText', false, text)
+    document.execCommand('insertHTML', false, processedText)
   }, [editor])
 
   return {insertText}
