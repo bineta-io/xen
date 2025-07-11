@@ -1,9 +1,20 @@
 <p align="center">
   <a href="https://bineta.io">
-   <img width="200px" src="./docs/logo-cut.png" alt="Logo">
+    <img src="./docs/logo-cut.png" width="160" alt="Xen logo">
   </a>
-  <h1 align="center">Xen – AI Replies for X (Twitter)</h1>
-  <p align="center">AI that writes tone-matched X/Twitter replies in one click—free, customizable, BYO key</p>
+</p>
+
+<h1 align="center">Xen – AI Replies for X (Twitter)</h1>
+
+<p align="center">
+  AI that writes tone-matched X/Twitter replies in one click — free, customizable, BYO key
+</p>
+
+<p align="center">
+  <a href="https://chrome.google.com/webstore/detail/eijgkablmpomnoghhfelpfiilagdbjkb">
+    <img src="https://img.shields.io/chrome-web-store/v/eijgkablmpomnoghhfelpfiilagdbjkb?label=Chrome%20Web%20Store&logo=google-chrome&color=blue" alt="Chrome Web Store">
+  </a>
+  <img src="https://img.shields.io/chrome-web-store/last-updated/eijgkablmpomnoghhfelpfiilagdbjkb?color=brightgreen" alt="Last Updated">
 </p>
 
 ## What is Xen?
