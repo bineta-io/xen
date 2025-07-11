@@ -1,8 +1,8 @@
 {
   "name": "xen",
-  "displayName": "Xen — generate replies on X/Twitter",
-  "version": "0.0.1",
-  "description": "Xen helps you with replies on X/Twitter.",
+  "displayName": "Xen – Open-Source AI Replies for X (Twitter)",
+  "version": "1.0.0",
+  "description": "Open-source AI that writes tone-matched X/Twitter replies in one click—free, customizable, BYO key",
   "author": "bineta.io",
   "homepage": "https://bineta.io",
   "scripts": {
