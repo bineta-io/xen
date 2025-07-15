@@ -1,6 +1,7 @@
 import "./index.css"
 import { useNavigate } from "react-router-dom"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+import { Header } from "~popup/components/Header"
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -45,41 +46,7 @@ function OpenRouterKey() {
           ...createNoiseBackground(0.08)
         }}
       />
-      <h2
-        style={{
-          fontFamily: "'Archivo Black', 'Bebas Neue', Impact, sans-serif",
-          fontWeight: 900,
-          fontSize: 32,
-          color: "#000",
-          marginBottom: 0,
-          letterSpacing: 2.5,
-          alignSelf: "flex-start",
-          transform: "rotate(-1.5deg)",
-          textTransform: "uppercase",
-          textShadow: "1px 1px 0 #FF3C38",
-          position: "relative",
-          zIndex: 1
-        }}>
-        Welcome to Xen
-      </h2>
-      <div
-        style={{
-          alignSelf: "flex-start",
-          fontSize: 13,
-          color: "#444",
-          marginBottom: 2,
-          fontFamily: "'Space Mono', 'Courier New', monospace",
-          fontWeight: 700,
-          letterSpacing: 2,
-          marginTop: -14,
-          transform: "rotate(-2deg)",
-          backgroundColor: "#ffeb3b",
-          padding: "1px 6px",
-          position: "relative",
-          zIndex: 1
-        }}>
-        by Bineta
-      </div>
+      <Header />
       <div
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
