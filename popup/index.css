@@ -42,33 +42,3 @@ body {
     box-shadow: 2px 2px 0 #000;
     background: #ffffcc;
 }
-
-/* Neobrutalistic button styles */
-.neo-button-primary {
-    transition: transform 0.1s, box-shadow 0.1s;
-}
-
-.neo-button-primary:hover {
-    transform: rotate(1deg) translateY(-2px) !important;
-    box-shadow: 7px 7px 0 #000 !important;
-}
-
-.neo-button-primary:active {
-    transform: rotate(1deg) translateY(1px) !important;
-    box-shadow: 4px 4px 0 #000 !important;
-}
-
-/* Advanced users button */
-.neo-button-secondary {
-    transition: transform 0.1s, box-shadow 0.1s;
-}
-
-.neo-button-secondary:hover {
-    transform: rotate(0.5deg) translateY(-1px) !important;
-    box-shadow: 4px 4px 0 #000 !important;
-}
-
-.neo-button-secondary:active {
-    transform: rotate(0.5deg) translateY(1px) !important;
-    box-shadow: 2px 2px 0 #000 !important;
-}

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Header } from "~popup/components/Header"
 
 // Helper function to create noise texture CSS (consistent with index.tsx)
 const createNoiseBackground = (opacity = 0.05) => {
@@ -43,49 +44,10 @@ function Onboarding() {
           ...createNoiseBackground(0.08),
         }}
       />
-
-      <h2
-        style={{
-          fontFamily: "'Archivo Black', 'Bebas Neue', Impact, sans-serif",
-          fontWeight: 900,
-          fontSize: 28,
-          color: "#000",
-          marginBottom: 0,
-          letterSpacing: 2,
-          alignSelf: "flex-start",
-          textTransform: "uppercase",
-          textShadow: "1px 1px 0 #FF3C38",
-          position: "relative",
-          zIndex: 1,
-          transform: "rotate(-1.5deg)",
-        }}
-      >
-        Welcome to Xen
-      </h2>
-
-      <div
-        style={{
-          alignSelf: "flex-start",
-          fontSize: 12,
-          color: "#444",
-          fontFamily: "'Space Mono', 'Courier New', monospace",
-          fontWeight: 700,
-          letterSpacing: 2,
-          backgroundColor: "#ffeb3b",
-          padding: "1px 6px",
-          marginTop: -14,
-          transform: "rotate(-2deg)",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        by Bineta
-      </div>
-
+      <Header />
       {/* Free trial */}
       <button
-        onClick={() => navigate("/apikey")}
-        className="neo-button-primary"
+        onClick={() => navigate("/key")}
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
           fontWeight: 700,
@@ -105,7 +67,7 @@ function Onboarding() {
           transition: "transform 0.1s, box-shadow 0.1s",
         }}
       >
-        Start Free Trial
+        Use free trial
         <br />
         <span
           style={{
@@ -115,11 +77,10 @@ function Onboarding() {
             marginTop: 4,
           }}
         >
-          20 replies included – no payment required
+          Test it out with 20 replies
         </span>
       </button>
 
-      {/* Premium box */}
       <div
         style={{
           width: "100%",
@@ -128,6 +89,7 @@ function Onboarding() {
           borderRadius: 8,
           padding: "12px 14px",
           boxShadow: "5px 5px 0 #000",
+          cursor: "pointer",
           textAlign: "center",
           transform: "rotate(-1deg)",
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
@@ -140,30 +102,27 @@ function Onboarding() {
           style={{
             fontWeight: 800,
             fontSize: 16,
-            backgroundColor: "#ffeb3b",
-            display: "inline-block",
             padding: "2px 8px",
             transform: "rotate(0.5deg)",
             marginBottom: 4,
           }}
         >
-          Premium: €10/month
+          Pro: €10/month
         </div>
         <div style={{ fontSize: 12, marginTop: 4, fontWeight: 600 }}>
-          Get 1000 replies monthly
+          Get 1K replies monthly, like a boss
         </div>
       </div>
 
       {/* Advanced users link */}
       <button
-        onClick={() => navigate("/apikey")}
-        className="neo-button-secondary"
+        onClick={() => navigate("/key")}
         style={{
           background: "#c2f0ff",
           border: "2px solid #000",
           borderRadius: 6,
           color: "#000",
-          fontSize: 11,
+          fontSize: 12,
           cursor: "pointer",
           marginTop: 10,
           padding: "6px 10px",
@@ -175,7 +134,7 @@ function Onboarding() {
           transform: "rotate(0.5deg)",
         }}
       >
-        Advanced users: Use your own OpenRouter API key
+        Use your own Open Router API key
       </button>
     </div>
   );
