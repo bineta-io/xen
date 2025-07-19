@@ -107,24 +107,23 @@ function MainPopup() {
         onClick={() => navigate("/key")}
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          fontWeight: 700,
-          fontSize: 16,
-          color: "#000",
-          background: "#7EC8E3",
-          border: "4px solid #000",
-          borderRadius: 8,
-          padding: "14px 18px",
-          boxShadow: "6px 6px 0 #000",
+          fontWeight: 500,
+          fontSize: 12,
+          color: "#666",
+          background: "#f5f5f5",
+          border: "2px solid #ccc",
+          borderRadius: 6,
+          padding: "8px 12px",
+          boxShadow: "2px 2px 0 #ccc",
           width: "100%",
           textAlign: "center",
           cursor: "pointer",
-          transform: "rotate(-0.5deg)",
           position: "relative",
           zIndex: 1,
           transition: "transform 0.1s, box-shadow 0.1s",
         }}
       >
-        🔑 Use your own OpenRouter API key
+        Use your own OpenRouter API key
       </button>
 
       {/* Option 3: Settings */}
