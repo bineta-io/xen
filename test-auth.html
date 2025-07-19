@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Xen Extension Auth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #cce7ff;
+            color: #004085;
+            border: 1px solid #99d5ff;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .code {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Xen Extension Authentication</h1>
+        
+        <div class="info status">
+            <strong>Instructions:</strong><br>
+            1. Install your Xen extension in Chrome<br>
+            2. Get the extension ID from chrome://extensions<br>
+            3. Enter the extension ID below<br>
+            4. Test the authentication flow
+        </div>
+
+        <div>
+            <label for="extensionId">Extension ID:</label>
+            <input type="text" id="extensionId" placeholder="Enter your extension ID here">
+            <small>You can find this at chrome://extensions</small>
+        </div>
+
+        <div>
+            <label for="jwtToken">JWT Token (for testing):</label>
+            <input type="text" id="jwtToken" placeholder="Enter a test JWT token">
+            <small>Use a real JWT token from your backend, or create a test one</small>
+        </div>
+
+        <div>
+            <button onclick="sendAuthToken()">🔑 Send Auth Token</button>
+            <button onclick="sendLogout()">🚪 Send Logout</button>
+            <button onclick="generateTestToken()">🧪 Generate Test Token</button>
+        </div>
+
+        <div id="status"></div>
+
+        <div>
+            <h3>📋 Sample JWT Token Structure</h3>
+            <div class="code">
+                <strong>Header:</strong> {"alg": "HS256", "typ": "JWT"}<br>
+                <strong>Payload:</strong> {"sub": "user123", "exp": 1735689600, "iat": 1735689000}<br>
+                <strong>Signature:</strong> HMACSHA256(...)
+            </div>
+        </div>
+
+        <div>
+            <h3>🔧 Integration Code for Your Web App</h3>
+            <div class="code">
+// Send auth token to extension<br>
+chrome.runtime.sendMessage(<br>
+&nbsp;&nbsp;"YOUR_EXTENSION_ID",<br>
+&nbsp;&nbsp;{ type: "AUTH_TOKEN", token: "your-jwt-token" },<br>
+&nbsp;&nbsp;(response) => console.log(response)<br>
+);
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function sendAuthToken() {
+            const extensionId = document.getElementById('extensionId').value.trim();
+            const jwtToken = document.getElementById('jwtToken').value.trim();
+
+            if (!extensionId) {
+                showStatus('Please enter the extension ID', 'error');
+                return;
+            }
+
+            if (!jwtToken) {
+                showStatus('Please enter a JWT token', 'error');
+                return;
+            }
+
+            if (typeof chrome === 'undefined' || !chrome.runtime) {
+                showStatus('Chrome extension API not available. Make sure you\'re using Chrome.', 'error');
+                return;
+            }
+
+            showStatus('Sending auth token to extension...', 'info');
+
+            chrome.runtime.sendMessage(
+                extensionId,
+                {
+                    type: "AUTH_TOKEN",
+                    token: jwtToken
+                },
+                (response) => {
+                    if (chrome.runtime.lastError) {
+                        showStatus(`Error: ${chrome.runtime.lastError.message}`, 'error');
+                        return;
+                    }
+
+                    if (response && response.success) {
+                        showStatus('✅ Successfully sent auth token to extension!', 'success');
+                    } else {
+                        showStatus(`❌ Failed to send token: ${response?.message || 'Unknown error'}`, 'error');
+                    }
+                }
+            );
+        }
+
+        function sendLogout() {
+            const extensionId = document.getElementById('extensionId').value.trim();
+
+            if (!extensionId) {
+                showStatus('Please enter the extension ID', 'error');
+                return;
+            }
+
+            if (typeof chrome === 'undefined' || !chrome.runtime) {
+                showStatus('Chrome extension API not available. Make sure you\'re using Chrome.', 'error');
+                return;
+            }
+
+            showStatus('Sending logout to extension...', 'info');
+
+            chrome.runtime.sendMessage(
+                extensionId,
+                {
+                    type: "LOGOUT"
+                },
+                (response) => {
+                    if (chrome.runtime.lastError) {
+                        showStatus(`Error: ${chrome.runtime.lastError.message}`, 'error');
+                        return;
+                    }
+
+                    if (response && response.success) {
+                        showStatus('✅ Successfully logged out from extension!', 'success');
+                    } else {
+                        showStatus(`❌ Failed to logout: ${response?.message || 'Unknown error'}`, 'error');
+                    }
+                }
+            );
+        }
+
+        function generateTestToken() {
+            // Generate a simple test JWT token (not for production!)
+            const header = btoa(JSON.stringify({"alg": "HS256", "typ": "JWT"}));
+            const payload = btoa(JSON.stringify({
+                "sub": "test-user",
+                "exp": Math.floor(Date.now() / 1000) + 3600, // 1 hour from now
+                "iat": Math.floor(Date.now() / 1000),
+                "email": "test@example.com"
+            }));
+            const signature = "test-signature"; // In real use, this would be properly signed
+            
+            const testToken = `${header}.${payload}.${signature}`;
+            document.getElementById('jwtToken').value = testToken;
+            
+            showStatus('✅ Generated test JWT token (for testing only)', 'success');
+        }
+
+        // Auto-detect extension ID if possible
+        window.addEventListener('load', () => {
+            // Try to get extension ID from URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const extensionId = urlParams.get('extensionId');
+            if (extensionId) {
+                document.getElementById('extensionId').value = extensionId;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 import "./index.css"
 import { useNavigate } from "react-router-dom"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
-import { Header } from "~popup/components/Header"
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -46,57 +45,55 @@ function OpenRouterKey() {
           ...createNoiseBackground(0.08)
         }}
       />
-      <Header />
+      
+      {/* Back button */}
+      <button
+        onClick={() => navigate("/")}
+        style={{
+          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+          fontWeight: 700,
+          fontSize: 12,
+          color: "#000",
+          background: "#f0f0f0",
+          border: "2px solid #000",
+          borderRadius: 6,
+          padding: "4px 8px",
+          boxShadow: "3px 3px 0 #000",
+          cursor: "pointer",
+          position: "absolute",
+          top: 10,
+          left: 10,
+          zIndex: 1
+        }}>
+        ← Back
+      </button>
+      
       <div
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
           fontWeight: 700,
-          fontSize: 14,
+          fontSize: 16,
           color: "#000",
-          background: "#FF3C38",
-          border: "4px solid #000",
-          borderRadius: 8,
-          padding: "10px 14px",
-          boxShadow: "5px 5px 0 #000",
-          margin: "6px 0",
-          width: "95%",
           textAlign: "center",
-          transform: "rotate(1deg)",
           position: "relative",
-          zIndex: 1
+          zIndex: 1,
+          marginTop: 20
         }}>
-        Enter your OpenRouter API key to get started
+        Add your OpenRouter key
       </div>
+      
       <input
         onChange={(e) => {
           setApiKey(e.target.value)
         }}
         value={apiKey ?? ""}
-        placeholder="API Key"
+        placeholder="Enter your OpenRouter API key..."
         className="neo-input"
-      />
-
-      {/* Settings button */}
-      <button
-        onClick={() => navigate("/settings")}
         style={{
-          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          fontWeight: 700,
-          fontSize: 14,
-          color: "#000",
-          background: "#FFD700",
-          border: "3px solid #000",
-          borderRadius: 8,
-          padding: "8px 16px",
-          boxShadow: "5px 5px 0 #000",
-          cursor: "pointer",
-          transform: "rotate(-0.5deg)",
           position: "relative",
           zIndex: 1,
-          marginTop: "8px"
-        }}>
-        Settings
-      </button>
+        }}
+      />
     </div>
   )
 }

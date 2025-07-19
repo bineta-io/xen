@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "~hooks/useAuth";
-import { Header } from "~popup/components/Header"
+import { Header } from "~popup/components/Header";
 
-// Helper function to create noise texture CSS (consistent with index.tsx)
+// Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
   return {
     backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
@@ -11,13 +11,17 @@ const createNoiseBackground = (opacity = 0.05) => {
     opacity
   };
 };
-function Onboarding() {
+
+function MainPopup() {
   const navigate = useNavigate();
-  const { openAuthUrl } = useAuth();
+  const { isAuthenticated, openAuthUrl, logout } = useAuth();
 
   const handleLogin = () => {
     openAuthUrl("https://xen-web-sable.vercel.app");
-    // openAuthUrl("http://localhost:3000/") // for local testing
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -51,16 +55,18 @@ function Onboarding() {
           ...createNoiseBackground(0.08),
         }}
       />
+      
       <Header />
-      {/* Free trial */}
+      
+      {/* Option 1: Login/Logout */}
       <button
-        onClick={() => navigate("/key")}
+        onClick={isAuthenticated ? handleLogout : handleLogin}
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
           fontWeight: 700,
           fontSize: 16,
           color: "#000",
-          background: "#7EC8E3",
+          background: isAuthenticated ? "#FFB6C1" : "#90EE90",
           border: "4px solid #000",
           borderRadius: 8,
           padding: "14px 18px",
@@ -74,79 +80,78 @@ function Onboarding() {
           transition: "transform 0.1s, box-shadow 0.1s",
         }}
       >
-        Use free trial
-        <br />
-        <span
-          style={{
-            fontSize: 12,
-            fontWeight: 500,
-            display: "block",
-            marginTop: 4,
-          }}
-        >
-          Test it out with 20 replies
-        </span>
+        {isAuthenticated ? (
+          <>
+            🚪 Log out
+          </>
+        ) : (
+          <>
+            🚀 Log in
+            <br />
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 500,
+                display: "block",
+                marginTop: 4,
+              }}
+            >
+              10 free replies for new users
+            </span>
+          </>
+        )}
       </button>
 
-      <button
-        onClick={handleLogin}
-        style={{
-          width: "100%",
-          background: "#90EE90",
-          border: "3px solid #000",
-          borderRadius: 8,
-          padding: "12px 14px",
-          boxShadow: "5px 5px 0 #000",
-          cursor: "pointer",
-          textAlign: "center",
-          transform: "rotate(-1deg)",
-          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          position: "relative",
-          zIndex: 1,
-          marginTop: 4,
-          transition: "transform 0.1s, box-shadow 0.1s",
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 800,
-            fontSize: 16,
-            padding: "2px 8px",
-            transform: "rotate(0.5deg)",
-            marginBottom: 4,
-          }}
-        >
-          🚀 Login & Subscribe Pro
-        </div>
-        <div style={{ fontSize: 12, marginTop: 4, fontWeight: 600 }}>
-          €10/month • 1K replies monthly
-        </div>
-      </button>
-
-      {/* Advanced users link */}
+      {/* Option 2: Use your own OpenRouter API key */}
       <button
         onClick={() => navigate("/key")}
         style={{
-          background: "#c2f0ff",
-          border: "2px solid #000",
-          borderRadius: 6,
-          color: "#000",
+          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+          fontWeight: 500,
           fontSize: 12,
+          color: "#666",
+          background: "#f5f5f5",
+          border: "2px solid #ccc",
+          borderRadius: 6,
+          padding: "8px 12px",
+          boxShadow: "2px 2px 0 #ccc",
+          width: "100%",
+          textAlign: "center",
           cursor: "pointer",
-          marginTop: 10,
-          padding: "6px 10px",
-          fontFamily: "'Space Mono', 'Courier New', monospace",
-          fontWeight: 700,
           position: "relative",
           zIndex: 1,
-          boxShadow: "3px 3px 0 #000",
-          transform: "rotate(0.5deg)",
+          transition: "transform 0.1s, box-shadow 0.1s",
         }}
       >
-        Use your own Open Router API key
+        Use your own OpenRouter API key
+      </button>
+
+      {/* Option 3: Settings */}
+      <button
+        onClick={() => navigate("/settings")}
+        style={{
+          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+          fontWeight: 700,
+          fontSize: 16,
+          color: "#000",
+          background: "#FFD700",
+          border: "4px solid #000",
+          borderRadius: 8,
+          padding: "14px 18px",
+          boxShadow: "6px 6px 0 #000",
+          width: "100%",
+          textAlign: "center",
+          cursor: "pointer",
+          transform: "rotate(0.5deg)",
+          position: "relative",
+          zIndex: 1,
+          transition: "transform 0.1s, box-shadow 0.1s",
+        }}
+      >
+        ⚙️ Settings
       </button>
     </div>
   );
 }
 
-export default Onboarding;
+export default MainPopup;
