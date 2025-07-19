@@ -1,6 +1,7 @@
 import "./index.css"
 import { useState } from "react"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+import { useAuth } from "~hooks/useAuth"
 import Settings from "./Settings"
 
 // Helper function to create noise texture CSS
@@ -15,10 +16,16 @@ const createNoiseBackground = (opacity = 0.05) => {
 
 function IndexPopup() {
   const [apiKey, setApiKey] = useOpenRouterAPIKey()
+  const { isAuthenticated, isLoading, logout, openAuthUrl } = useAuth()
   const [showSettings, setShowSettings] = useState(false)
   
   if (showSettings) {
     return <Settings onBack={() => setShowSettings(false)} />
+  }
+
+  // TODO: Replace with your actual auth URL
+  const handleLogin = () => {
+    openAuthUrl("https://xen-web-sable.vercel.app")
   }
 
   return (
@@ -86,34 +93,148 @@ function IndexPopup() {
         }}>
         by Bineta
       </div>
-      <div
-        style={{
-          fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
-          fontWeight: 700,
-          fontSize: 14,
-          color: "#000",
-          background: "#FF3C38",
-          border: "4px solid #000",
-          borderRadius: 8,
-          padding: "10px 14px",
-          boxShadow: "5px 5px 0 #000",
-          margin: "6px 0",
-          width: "95%",
-          textAlign: "center",
-          transform: "rotate(1deg)",
-          position: "relative",
-          zIndex: 1
-        }}>
-        Enter your OpenRouter API key to get started
-      </div>
-      <input
-        onChange={(e) => {
-          setApiKey(e.target.value)
-        }}
-        value={apiKey ?? ""}
-        placeholder="API Key"
-        className="neo-input"
-      />
+
+      {/* Authentication Status */}
+      {isLoading ? (
+        <div
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#f0f0f0",
+            border: "4px solid #000",
+            borderRadius: 8,
+            padding: "10px 14px",
+            boxShadow: "5px 5px 0 #000",
+            margin: "6px 0",
+            width: "95%",
+            textAlign: "center",
+            transform: "rotate(1deg)",
+            position: "relative",
+            zIndex: 1
+          }}>
+          Loading...
+        </div>
+      ) : isAuthenticated ? (
+        <div
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#90EE90",
+            border: "4px solid #000",
+            borderRadius: 8,
+            padding: "10px 14px",
+            boxShadow: "5px 5px 0 #000",
+            margin: "6px 0",
+            width: "95%",
+            textAlign: "center",
+            transform: "rotate(1deg)",
+            position: "relative",
+            zIndex: 1
+          }}>
+          ✓ Logged in with subscription
+        </div>
+      ) : (
+        <div
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#FF3C38",
+            border: "4px solid #000",
+            borderRadius: 8,
+            padding: "10px 14px",
+            boxShadow: "5px 5px 0 #000",
+            margin: "6px 0",
+            width: "95%",
+            textAlign: "center",
+            transform: "rotate(1deg)",
+            position: "relative",
+            zIndex: 1
+          }}>
+          {apiKey ? "Using OpenRouter API key" : "Login or enter OpenRouter API key"}
+        </div>
+      )}
+
+      {/* Authentication Actions */}
+      {!isAuthenticated && (
+        <button
+          onClick={handleLogin}
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#7DEDFF",
+            border: "3px solid #000",
+            borderRadius: 8,
+            padding: "8px 16px",
+            boxShadow: "5px 5px 0 #000",
+            cursor: "pointer",
+            transform: "rotate(0.5deg)",
+            position: "relative",
+            zIndex: 1,
+            marginBottom: "8px"
+          }}>
+          Login with Subscription
+        </button>
+      )}
+
+      {isAuthenticated && (
+        <button
+          onClick={logout}
+          style={{
+            fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: "#000",
+            background: "#FFB6C1",
+            border: "3px solid #000",
+            borderRadius: 8,
+            padding: "8px 16px",
+            boxShadow: "5px 5px 0 #000",
+            cursor: "pointer",
+            transform: "rotate(-0.5deg)",
+            position: "relative",
+            zIndex: 1,
+            marginBottom: "8px"
+          }}>
+          Logout
+        </button>
+      )}
+
+      {/* OpenRouter API Key section - only show if not authenticated */}
+      {!isAuthenticated && (
+        <>
+          <div
+            style={{
+              fontSize: 11,
+              fontFamily: "'Space Mono', 'Courier New', monospace",
+              fontWeight: 700,
+              color: "#444",
+              letterSpacing: 1,
+              textTransform: "uppercase",
+              transform: "rotate(-1deg)",
+              alignSelf: "flex-start",
+              position: "relative",
+              zIndex: 1
+            }}>
+            Or use OpenRouter:
+          </div>
+          <input
+            onChange={(e) => {
+              setApiKey(e.target.value)
+            }}
+            value={apiKey ?? ""}
+            placeholder="API Key"
+            className="neo-input"
+          />
+        </>
+      )}
 
       {/* Settings button */}
       <button

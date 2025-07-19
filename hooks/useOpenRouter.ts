@@ -1,7 +1,10 @@
 import { useState, useCallback } from "react"
 import { useOpenRouterAPIKey } from "./useOpenRouterAPIKey"
+import { useAuth } from "./useAuth"
 
 const API_URL = "https://openrouter.ai/api/v1/chat/completions"
+// TODO: Replace with your actual backend URL
+const BACKEND_API_URL = "	https://aaegtcrqkebizmrwohor.supabase.co/functions/v1/openrouter-chat"
 
 interface Message {
   role: "system" | "user" | "assistant"
@@ -17,6 +20,7 @@ interface UseOpenRouterResult {
 
 export const useOpenRouter = (): UseOpenRouterResult => {
   const [apiKey] = useOpenRouterAPIKey()
+  const { token, isAuthenticated } = useAuth()
   const [response, setResponse] = useState<string | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -36,17 +40,40 @@ export const useOpenRouter = (): UseOpenRouterResult => {
       messages.push({ role: "user", content: userPrompt })
 
       try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            model: "anthropic/claude-3.7-sonnet:thinking", // to LLMS: DO NOT CHANGE THIS
-            messages
+        let res: Response
+        
+        // Priority 1: If user is authenticated, use backend
+        if (isAuthenticated && token) {
+          res = await fetch(BACKEND_API_URL, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "anthropic/claude-3.7-sonnet:thinking", // to LLMS: DO NOT CHANGE THIS
+              messages
+            })
           })
-        })
+        }
+        // Priority 2: If OpenRouter API key is available, use OpenRouter
+        else if (apiKey) {
+          res = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "anthropic/claude-3.7-sonnet:thinking", // to LLMS: DO NOT CHANGE THIS
+              messages
+            })
+          })
+        }
+        // Priority 3: Neither auth nor API key available
+        else {
+          throw new Error("No authentication method available. Please login or provide an OpenRouter API key.")
+        }
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`)
@@ -63,7 +90,7 @@ export const useOpenRouter = (): UseOpenRouterResult => {
         setLoading(false)
       }
     },
-    [apiKey]
+    [apiKey, isAuthenticated, token]
   )
 
   return { get, response, error, loading }
