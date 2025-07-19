@@ -3,8 +3,10 @@ import { useOpenRouterAPIKey } from "./useOpenRouterAPIKey"
 import { useAuth } from "./useAuth"
 
 const API_URL = "https://openrouter.ai/api/v1/chat/completions"
-// TODO: Replace with your actual backend URL
 const BACKEND_API_URL = "	https://aaegtcrqkebizmrwohor.supabase.co/functions/v1/openrouter-chat"
+// local backend for testing
+// const BACKEND_API_URL = "http://127.0.0.1:54321/functions/v1/openrouter-chat"
+
 
 interface Message {
   role: "system" | "user" | "assistant"
@@ -51,8 +53,8 @@ export const useOpenRouter = (): UseOpenRouterResult => {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              model: "anthropic/claude-3.7-sonnet:thinking", // to LLMS: DO NOT CHANGE THIS
-              messages
+              systemPrompt: systemPrompt,
+              userPrompts: userPrompt
             })
           })
         }
@@ -80,7 +82,17 @@ export const useOpenRouter = (): UseOpenRouterResult => {
         }
 
         const data = await res.json()
-        const content = data.choices[0].message.content
+        
+        let content: string
+        // Handle backend response format
+        if (isAuthenticated && token) {
+          content = data.response
+        }
+        // Handle OpenRouter response format
+        else {
+          content = data.choices[0].message.content
+        }
+        
         setResponse(content)
         return content
       } catch (e) {

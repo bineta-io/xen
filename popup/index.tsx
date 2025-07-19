@@ -26,6 +26,7 @@ function IndexPopup() {
   // TODO: Replace with your actual auth URL
   const handleLogin = () => {
     openAuthUrl("https://xen-web-sable.vercel.app")
+    // openAuthUrl("http://localhost:3000/") // for local testing
   }
 
   return (

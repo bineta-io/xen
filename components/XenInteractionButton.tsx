@@ -4,6 +4,7 @@ import { useOpenRouter } from "~hooks/useOpenRouter"
 import { extractTweetText } from "./domUtils"
 import XenButton from "./XenButton"
 import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
+import { useAuth } from "~hooks/useAuth"
 import { Prompt } from "~Prompt"
 import { useProfile } from "~hooks/useProfile"
 import { useWritingStyle } from "~hooks/useWritingStyle"
@@ -13,6 +14,7 @@ import { useEditor } from "~hooks/useEditor"
 
 export const XenInteractionButton: React.FC = () => {
   const [apiKey] = useOpenRouterAPIKey()
+  const { isAuthenticated } = useAuth()
   const [profile] = useProfile()
   const [writingStyle] = useWritingStyle()
   const [systemPrompt] = useSystemPrompt()
@@ -23,7 +25,8 @@ export const XenInteractionButton: React.FC = () => {
   const {insertText} = useEditor()
 
   const handleXenButtonClick = async () => {
-    if (!apiKey) {
+    // Check if user has either authentication or API key
+    if (!isAuthenticated && !apiKey) {
       setShowError(true)
       return
     }
@@ -51,12 +54,12 @@ export const XenInteractionButton: React.FC = () => {
       <XenButton 
         onClick={handleXenButtonClick} 
         loading={loading} 
-        hasError={!apiKey && showError}
-        errorMessage="API key required"
+        hasError={!isAuthenticated && !apiKey && showError}
+        errorMessage="Login or API key required"
       />
-      {!apiKey && showError && (
+      {!isAuthenticated && !apiKey && showError && (
         <div className="xen-error-tooltip">
-          <div className="xen-error-message">API key required</div>
+          <div className="xen-error-message">Login or API key required</div>
         </div>
       )}
       <style>{`
