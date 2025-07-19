@@ -1,7 +1,6 @@
-import "./index.css"
-import { useNavigate } from "react-router-dom"
-import { useOpenRouterAPIKey } from "~hooks/useOpenRouterAPIKey"
-import { Header } from "~popup/components/Header"
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "~hooks/useAuth";
+import { Header } from "~popup/components/Header";
 
 // Helper function to create noise texture CSS
 const createNoiseBackground = (opacity = 0.05) => {
@@ -10,31 +9,38 @@ const createNoiseBackground = (opacity = 0.05) => {
     backgroundBlendMode: "overlay",
     backgroundSize: "200px",
     opacity
-  }
-}
+  };
+};
 
-function OpenRouterKey() {
-  const [apiKey, setApiKey] = useOpenRouterAPIKey()
-  const navigate = useNavigate()
+function AuthenticatedDashboard() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <div
       style={{
         padding: 28,
-        width: 240,
+        width: 260,
         background: "#fffbe6",
-        minWidth: 180,
-        maxWidth: 320,
+        minWidth: 200,
+        maxWidth: 340,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 16,
+        gap: 20,
         border: "4px solid #000",
         borderRadius: 8,
         boxShadow: "8px 8px 0 #000",
         position: "relative",
-        overflow: "hidden"
-      }}>
-      {/* Noise texture overlay */}
+        overflow: "hidden",
+      }}
+    >
+      {/* Noise */}
       <div
         style={{
           position: "absolute",
@@ -43,69 +49,39 @@ function OpenRouterKey() {
           right: 0,
           bottom: 0,
           pointerEvents: "none",
-          ...createNoiseBackground(0.08)
+          ...createNoiseBackground(0.08),
         }}
       />
+      
       <Header />
+      
+      {/* Welcome message */}
       <div
         style={{
           fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
           fontWeight: 700,
-          fontSize: 14,
+          fontSize: 16,
           color: "#000",
-          background: "#7EC8E3",
+          background: "#90EE90",
           border: "4px solid #000",
           borderRadius: 8,
-          padding: "12px 14px",
+          padding: "12px 16px",
           boxShadow: "5px 5px 0 #000",
-          margin: "6px 0",
           width: "95%",
           textAlign: "center",
           transform: "rotate(1deg)",
           position: "relative",
           zIndex: 1
-        }}>
-        🔑 Free Trial Mode
-        <div style={{ fontSize: 11, marginTop: 4, fontWeight: 500 }}>
-          Enter your OpenRouter API key to get started
-        </div>
-      </div>
-      <input
-        onChange={(e) => {
-          setApiKey(e.target.value)
-        }}
-        value={apiKey ?? ""}
-        placeholder="Enter your OpenRouter API key..."
-        className="neo-input"
-        style={{
-          position: "relative",
-          zIndex: 1,
-        }}
-      />
-
-      {/* Help text */}
-      <div
-        style={{
-          fontSize: 10,
-          fontFamily: "'Space Mono', 'Courier New', monospace",
-          fontWeight: 600,
-          color: "#666",
-          textAlign: "center",
-          position: "relative",
-          zIndex: 1,
-          background: "#f8f8f8",
-          border: "1px solid #ddd",
-          borderRadius: 4,
-          padding: "6px 8px",
-          transform: "rotate(-0.3deg)",
         }}
       >
-        💡 Get your free API key at openrouter.ai<br />
-        No subscription needed!
+        ✓ You're logged in!
+        <div style={{ fontSize: 12, marginTop: 4, fontWeight: 500 }}>
+          Ready to generate AI replies
+        </div>
       </div>
 
       {/* Action buttons */}
-      <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 8, position: "relative", zIndex: 1 }}>
+      <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12, position: "relative", zIndex: 1 }}>
         {/* Settings button */}
         <button
           onClick={() => navigate("/settings")}
@@ -117,7 +93,7 @@ function OpenRouterKey() {
             background: "#FFD700",
             border: "3px solid #000",
             borderRadius: 8,
-            padding: "10px 16px",
+            padding: "12px 16px",
             boxShadow: "5px 5px 0 #000",
             cursor: "pointer",
             transform: "rotate(-0.5deg)",
@@ -127,29 +103,50 @@ function OpenRouterKey() {
           ⚙️ Settings
         </button>
 
-        {/* Back button */}
+        {/* Logout button */}
         <button
-          onClick={() => navigate("/")}
+          onClick={handleLogout}
           style={{
             fontFamily: "'Space Grotesk', 'Arial Black', sans-serif",
             fontWeight: 700,
-            fontSize: 12,
+            fontSize: 14,
             color: "#000",
-            background: "#f0f0f0",
-            border: "2px solid #000",
-            borderRadius: 6,
-            padding: "8px 12px",
-            boxShadow: "3px 3px 0 #000",
+            background: "#FFB6C1",
+            border: "3px solid #000",
+            borderRadius: 8,
+            padding: "12px 16px",
+            boxShadow: "5px 5px 0 #000",
             cursor: "pointer",
-            transform: "rotate(0.3deg)",
+            transform: "rotate(0.5deg)",
             transition: "transform 0.1s, box-shadow 0.1s",
           }}
         >
-          ← Back to main menu
+          🚪 Logout
         </button>
       </div>
+
+      {/* Usage info */}
+      <div
+        style={{
+          fontSize: 11,
+          fontFamily: "'Space Mono', 'Courier New', monospace",
+          fontWeight: 700,
+          color: "#666",
+          textAlign: "center",
+          position: "relative",
+          zIndex: 1,
+          background: "#f5f5f5",
+          border: "2px solid #ccc",
+          borderRadius: 4,
+          padding: "6px 8px",
+          transform: "rotate(-0.5deg)",
+        }}
+      >
+        Navigate to X/Twitter and start<br />
+        replying with AI assistance!
+      </div>
     </div>
-  )
+  );
 }
 
-export default OpenRouterKey
+export default AuthenticatedDashboard;
