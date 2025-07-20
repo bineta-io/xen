@@ -3,7 +3,7 @@ import { useOpenRouterAPIKey } from "./useOpenRouterAPIKey"
 import { useAuth } from "./useAuth"
 
 const API_URL = "https://openrouter.ai/api/v1/chat/completions"
-const BACKEND_API_URL = "	https://aaegtcrqkebizmrwohor.supabase.co/functions/v1/openrouter-chat"
+const BACKEND_API_URL = "https://aaegtcrqkebizmrwohor.supabase.co/functions/v1/openrouter-chat"
 // local backend for testing
 // const BACKEND_API_URL = "http://127.0.0.1:54321/functions/v1/openrouter-chat"
 
