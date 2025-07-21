@@ -31,7 +31,8 @@
       "matches": [
         "https://xen-web-sable.vercel.app/*",
         "https://localhost/*",
-        "http://localhost/*"
+        "http://localhost/*",
+        "https://xen.bineta.io/*"
       ]
     }
   }

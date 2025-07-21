@@ -17,7 +17,7 @@ function MainPopup() {
   const { isAuthenticated, openAuthUrl, logout } = useAuth();
 
   const handleLogin = () => {
-    openAuthUrl("https://xen-web-sable.vercel.app");
+    openAuthUrl("https://xen.bineta.io/");
   };
 
   const handleLogout = () => {
