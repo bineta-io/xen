@@ -16,7 +16,7 @@ function Onboarding() {
   const { openAuthUrl } = useAuth();
 
   const handleLogin = () => {
-    openAuthUrl("https://xen-web-sable.vercel.app");
+    openAuthUrl("https://xen.bineta.io/");
     // openAuthUrl("http://localhost:3000/") // for local testing
   };
 
